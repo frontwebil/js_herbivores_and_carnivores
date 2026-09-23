@@ -2,6 +2,7 @@
 
 class Animal {
   static alive = [];
+
   health = 100;
 
   constructor(name) {
@@ -23,20 +24,14 @@ class Herbivore extends Animal {
 
 class Carnivore extends Animal {
   bite(herbivore) {
-    if (!(herbivore instanceof Herbivore)) {
-      return;
-    }
-
-    if (herbivore.hidden) {
+    if (!(herbivore instanceof Herbivore) || herbivore.hidden) {
       return;
     }
 
     herbivore.health -= 50;
 
     if (herbivore.health <= 0) {
-      const index = Animal.alive.indexOf(herbivore);
-
-      Animal.alive.splice(index, 1);
+      Animal.alive = Animal.alive.filter((animal) => animal.health > 0);
     }
   }
 }
